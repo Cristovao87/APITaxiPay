@@ -1,7 +1,9 @@
+using APITaxiPay.Dados;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiTaxiPay
+namespace APITaxiPay
 {
     public class Startup
     {
@@ -30,8 +32,11 @@ namespace ApiTaxiPay
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiTaxiPay", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "APITaxiPay", Version = "v1" });
             });
+
+            services.AddDbContext<TaxiPayContexto>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +46,7 @@ namespace ApiTaxiPay
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiTaxiPay v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "APITaxiPay v1"));
             }
 
             app.UseHttpsRedirection();

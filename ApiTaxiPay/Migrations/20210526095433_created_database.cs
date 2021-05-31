@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ApiTaxiPay.Migrations
+namespace APITaxiPay.Migrations
 {
     public partial class created_database : Migration
     {

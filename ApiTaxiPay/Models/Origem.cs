@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiTaxiPay.Models
+namespace APITaxiPay.Models
 {
     public class Origem
     {

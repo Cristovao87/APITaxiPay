@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ApiTaxiPay.Dados;
-using ApiTaxiPay.Models;
+using APITaxiPay.Dados;
+using APITaxiPay.Models;
 
 namespace APITaxiPay.Controllers
 {

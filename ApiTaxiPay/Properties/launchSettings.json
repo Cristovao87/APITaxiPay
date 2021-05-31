@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ApiTaxiPay": {
+    "APITaxiPay": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
