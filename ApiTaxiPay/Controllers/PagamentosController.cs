@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APITaxiPay.Dados;
 using APITaxiPay.Models;
+using Amazon.DynamoDBv2;
+using Microsoft.Data.SqlClient;
 
 namespace APITaxiPay.Controllers
 {
@@ -104,5 +106,74 @@ namespace APITaxiPay.Controllers
         {
             return _context.Pagamentos.Any(e => e.PagamentoID == id);
         }
+
+
+
+        // Método para efectuar um pagamento
+      /*  [HttpPatch]
+        public async Task<ActionResult<int>> PostPagar(Pagamento pagamento, int idCarteira, int idCorrida, decimal valor, string tipo, string estado)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+
+            int corridaId = idCorrida;
+            int carteiraId = idCarteira;
+            // Buscar o valor disponivel na carteira do Passageiro
+            //string saldoCarteira = "SELECT Saldo FROM Carteira WHERE CarteiraID = @idCarteira";
+
+            var saldoCarteira = _context.Carteiras.FromSqlRaw("SELECT Saldo FROM Carteira WHERE CarteiraID = @idCarteira", idCarteira).FirstOrDefault();
+            
+            decimal valorDisponivel = System.Convert.ToDecimal(saldoCarteira);
+           
+
+           var valordisponivel = await _context.Carteiras
+                .Include(p => p.Saldo)
+                .ToListAsync(); 
+
+           if (valorDisponivel >= valor)
+            {
+                try
+                {
+
+                    string query = "UPDATE Carteira SET Saldo = Saldo - @valor WHERE CarteiraID = @IdCarteira";
+                    //Update tbCarteira set Saldo = Saldo - valor where IdCarteira=inpIdCarteira
+                    decimal updateCarteira = System.Convert.ToDecimal(query);
+
+                    //Inserir new pagamento 
+
+                    var commandText = "INSERT INTO[Pagamento](Valor, Tempo, Tipo, Estado, CorridaID, CarteiraID) VALUES(@valor, @dataPgto, @tipo, @estado, @idCorrida, @idCarteira)";
+
+                    SqlCommand command = new SqlCommand();
+                    //var parameter = new SqlParameter();
+                    command.Parameters.AddWithValue("@valor", pagamento.Valor);
+                    command.Parameters.AddWithValue("@dataPgto", pagamento.Tempo);
+                    command.Parameters.AddWithValue("@tipo", pagamento.Tipo);
+                    command.Parameters.AddWithValue("@estado", pagamento.Estado);
+                    command.Parameters.AddWithValue("@idCorrida", pagamento.CorridaID);
+                    command.Parameters.AddWithValue("@idCarteira", pagamento.CarteiraID);
+
+                    await _context.Database.ExecuteSqlRawAsync(commandText, command);
+
+                    transaction.Commit();
+                    }
+                
+                catch (Exception)
+                {
+                   transaction.Rollback();
+        
+
+                }
+            }
+            return 1;
+        }
+       
+       
+
+
+
+        */
+
+
     }
+
+
 }
